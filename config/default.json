@@ -1,0 +1,25 @@
+{
+  "server": {
+    "port": 5000,
+    "host": "localhost"
+  },
+  "client": {
+    "port": 3000
+  },
+  "ai": {
+    "defaultModel": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "maxTokens": 2000
+  },
+  "security": {
+    "cors": {
+      "origin": ["http://localhost:3000"],
+      "methods": ["GET", "POST", "PUT", "DELETE"],
+      "allowedHeaders": ["Content-Type", "Authorization"]
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "combined"
+  }
+}

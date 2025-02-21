@@ -1,0 +1,89 @@
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.status-bar {
+  font-family: monospace;
+  border-top-left-radius: 4px;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+/* Reset CSS de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  /* Retirer tout overflow qui pourrait couper le dropdown */
+  overflow: visible;
+  position: relative; /* Pour s'assurer que le z-index fonctionne */
+  z-index: 1000; /* Pour que l'en-tête soit au-dessus du contenu */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: transparent;
+  padding: 0; /* Retirons le padding */
+  border: none;
+  box-shadow: none;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 2rem; /* Augmenté la taille */
+  font-weight: 600;
+  /* Ajout du dégradé comme dans l'éditeur Mermaid */
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0 12px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Augmenté l'espacement */
+}
+
+.header-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* Augmenté la taille */
+  height: 44px; /* Augmenté la taille */
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header-icon-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Style pour les emojis dans l'en-tête */
+.header-emoji {
+  font-size: 1.5rem; /* Augmenté la taille des emojis */
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

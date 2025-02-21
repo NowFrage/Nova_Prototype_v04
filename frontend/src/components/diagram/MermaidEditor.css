@@ -1,0 +1,150 @@
+.mermaid-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--bg-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+.editor-toolbar h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.toolbar-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.toolbar-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.toolbar-button:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color-soft);
+  color: var(--primary-color);
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.zoom-controls span {
+  min-width: 48px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.editor-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  flex: 1;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+.code-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: 100%;
+}
+
+.code-editor {
+  flex: 1;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  resize: none;
+  transition: all var(--transition-normal);
+}
+
+.code-editor:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color-soft);
+}
+
+.preview-panel {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--secondary-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-xl);
+}
+
+.mermaid-preview {
+  position: absolute;
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.mermaid-preview :global(.node) rect,
+.mermaid-preview :global(.node) circle,
+.mermaid-preview :global(.node) polygon {
+  fill: var(--bg-color);
+  stroke: var(--primary-color);
+}
+
+.mermaid-preview :global(.node) text {
+  fill: var(--text-color);
+}
+
+.mermaid-preview :global(.edgeLabel) {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.mermaid-preview :global(.edgePath) path {
+  stroke: var(--primary-color);
+}
+
+.error-message {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background-color: var(--error-bg);
+  color: var(--error-color);
+  font-size: 0.9rem;
+  animation: fadeIn 0.3s ease-out;
+}

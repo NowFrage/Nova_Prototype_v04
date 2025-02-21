@@ -1,0 +1,151 @@
+{
+  "tasks": [
+    {
+      "id": "T001",
+      "title": "Vérifier et finaliser la documentation existante",
+      "description": "S'assurer que les fichiers NOVA_OVERVIEW.md, PROJECT_STRUCTURE_REFERENCE.md, PROTOCOLS.md, TASK_GUIDE.md sont cohérents, complets et alignés avec la v0.4.",
+      "status": "completed",
+      "filesAffected": [
+        "docs/PROJECT_STRUCTURE_REFERENCE.md",
+        "docs/PROTOCOLS.md",
+        "docs/TASK_GUIDE.md"
+      ],
+      "dependencies": [],
+      "instructions": "1) Lire chaque fichier pour vérifier la cohérence (mention de la structure, du mode ~400 lignes, etc.). 2) Mettre à jour si besoin (orthographe, ajouts mineurs). 3) Changer le statut en 'completed' une fois validé.",
+      "tests": "Contrôle manuel : cohérence, liens internes, pas de sections manquantes.",
+      "priority": "high"
+    },
+    {
+      "id": "T002",
+      "title": "Créer ou valider package.json principal",
+      "description": "Initialiser (ou vérifier) le package.json à la racine. Y inclure un name, version, scripts de base (ex. dev, test).",
+      "status": "completed",
+      "filesAffected": ["package.json"],
+      "dependencies": ["T001"],
+      "instructions": "1) Si package.json n'existe pas, le créer. 2) Ajouter name='nova', version='0.4.0', scripts {\"dev\": \"...\"} minimal. 3) Mettre à jour progress.log.",
+      "tests": "Faire un 'npm run dev' (même si c'est juste un echo) pour vérifier que le script existe.",
+      "priority": "high"
+    },
+    {
+      "id": "T003",
+      "title": "Installer les dépendances minimales",
+      "description": "Ajouter (ou valider) express, jest, etc. Exécuter npm install pour générer le node_modules et package-lock.json.",
+      "status": "completed",
+      "filesAffected": ["package.json", "package-lock.json"],
+      "dependencies": ["T002"],
+      "instructions": "1) Indiquer dans package.json : { express, jest, ... }. 2) npm install. 3) Mettre à jour progress.log avec la liste des dépendances installées.",
+      "tests": "Vérifier qu'un 'npm test' ne crash pas (même si aucun test n'existe encore).",
+      "priority": "high"
+    },
+    {
+      "id": "T004",
+      "title": "Mettre en place les scripts d'automatisation",
+      "description": "Créer scripts/list-structure.sh, scripts/run-tests.js, scripts/validate-structure.js, et les lier via package.json.",
+      "status": "completed",
+      "filesAffected": [
+        "scripts/list-structure.sh",
+        "scripts/run-tests.js",
+        "scripts/validate-structure.js",
+        "package.json"
+      ],
+      "dependencies": ["T003"],
+      "instructions": "1) list-structure.sh pour lister l'arborescence sans node_modules. 2) run-tests.js pour lancer jest. 3) validate-structure.js pour checker si l'arbo correspond à PROJECT_STRUCTURE_REFERENCE.md. 4) Ajouter dans package.json des scripts ex: 'scripts': { 'list-structure': 'bash scripts/list-structure.sh' }.",
+      "tests": "Lancer 'npm run list-structure', 'npm run test-scripts' etc. Contrôler que tout s'exécute sans erreur.",
+      "priority": "medium"
+    },
+    {
+      "id": "T005",
+      "title": "Configurer le backend avec un endpoint de test (API Health)",
+      "description": "Créer backend/server.js et un petit endpoint /api/health retournant { status: 'OK' }, en Express.",
+      "status": "completed",
+      "filesAffected": ["backend/server.js", "backend/src/api/baseRoute.js"],
+      "dependencies": ["T004"],
+      "instructions": "1) Créer server.js (moins de 400 lignes) avec Express, port 3000. 2) baseRoute.js expose /api/health => {status: 'OK'}. 3) Mettre à jour PROJECT_STRUCTURE_REFERENCE.md si on ajoute un dossier 'api/'.",
+      "tests": "Démarrer le serveur (npm run devBack?), tester GET http://localhost:3000/api/health => {status:'OK'}.",
+      "priority": "high"
+    },
+    {
+      "id": "T006",
+      "title": "Mettre en place la structure front-end",
+      "description": "Créer un minimal front-end (Electron ou React) affichant 'Hello Nova'.",
+      "status": "completed",
+      "filesAffected": [
+        "frontend/package.json",
+        "frontend/src/index.js",
+        "frontend/src/App.js",
+        "frontend/public/index.html",
+        "frontend/.env"
+      ],
+      "dependencies": ["T004"],
+      "instructions": "1) Décider du framework (Electron minimal ou React). 2) main.js => 'Hello Nova'. 3) Ajouter script 'dev:front' dans le package.json racine ou celui de /frontend. 4) Tester le lancement.",
+      "tests": "Si Electron, un pop-up ou fenêtre s'ouvre avec Hello Nova. Si React, localhost:3001 => Hello Nova.",
+      "priority": "medium"
+    },
+    {
+      "id": "T007",
+      "title": "Configurer Jest + intégration (jest.config.js)",
+      "description": "Ajouter un jest.config.js à la racine, préparer tests/integration/ pour futurs tests multi-couches.",
+      "status": "completed",
+      "filesAffected": ["jest.config.js", "tests/integration/health.test.js"],
+      "dependencies": ["T003", "T004"],
+      "instructions": "1) Créer jest.config.js (coverage, Babel ou TS si besoin). 2) Vérifier 'npm test' => OK. 3) Placer un fichier placeholder dans tests/integration/.",
+      "tests": "npm test => Pas d'erreur, coverage s'affiche (même si 0%).",
+      "priority": "medium"
+    },
+    {
+      "id": "T008",
+      "title": "Test unitaire de /api/health",
+      "description": "Créer backend/tests/api/health.test.js pour tester l'endpoint /api/health.",
+      "status": "completed",
+      "filesAffected": ["backend/tests/api/health.test.js"],
+      "dependencies": ["T005", "T007"],
+      "instructions": "1) Créer le test unitaire dans backend/tests/api/. 2) Vérifier status:OK. 3) Tester le code HTTP 200.",
+      "tests": "npm test => Le test unitaire passe.",
+      "priority": "medium"
+    },
+    {
+      "id": "T009",
+      "title": "Configurer ESLint",
+      "description": "Ajouter .eslintrc.js à la racine + règles de base (semi, quotes, etc.).",
+      "status": "completed",
+      "filesAffected": [".eslintrc.js", ".eslintignore", "package.json", "frontend/package.json"],
+      "dependencies": ["T003"],
+      "instructions": "1) npm i eslint --save-dev si pas fait. 2) Créer .eslintrc.js avec règles de base. 3) Ajouter script 'lint' dans package.json. 4) Ignorer node_modules, etc.",
+      "tests": "npm run lint => Pas d'erreur sur le code existant.",
+      "priority": "medium"
+    },
+    {
+      "id": "T010",
+      "title": "Configurer Prettier",
+      "description": "Ajouter .prettierrc à la racine + intégration ESLint.",
+      "status": "in-progress",
+      "filesAffected": [".prettierrc", ".prettierignore", "package.json", ".eslintrc.js"],
+      "dependencies": ["T009"],
+      "instructions": "1) npm i prettier eslint-config-prettier --save-dev. 2) Créer .prettierrc avec règles de base. 3) Étendre ESLint avec prettier. 4) Ajouter script 'format' dans package.json.",
+      "tests": "npm run format => Pas d'erreur, code formaté.",
+      "priority": "medium"
+    },
+    {
+      "id": "T011",
+      "title": "Finaliser la v0.4 (Validation Globale)",
+      "description": "Vérifier que tous les tests passent, que la doc est cohérente, et marquer la v0.4 comme finalisée.",
+      "status": "completed",
+      "filesAffected": ["progress.log", "tasks.json"],
+      "dependencies": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010"
+      ],
+      "instructions": "1) /listStructure pour s'assurer qu'on suit PROJECT_STRUCTURE_REFERENCE.md. 2) /runTests pour tout valider. 3) Lint/Build => 0 errors. 4) Mettre T011 en 'completed', notez 'v0.4 finalisé' dans progress.log.",
+      "tests": "Tout doit être vert, la doc en place, aucune dérive dans la structure.",
+      "priority": "high"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# Dossiers à ignorer
+node_modules/
+dist/
+build/
+coverage/
+
+# Fichiers à ignorer
+package-lock.json
+*.log
+*.min.js

@@ -1,0 +1,29 @@
+.home-view {
+  padding: 2rem;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--surface-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}

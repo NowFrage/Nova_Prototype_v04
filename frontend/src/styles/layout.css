@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: white;
+}
+
+#root {
+  height: 100%;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* S'assurer qu'il n'y a pas d'overflow hidden ici */
+  overflow: visible;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  padding: 20px;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  /* Limiter l'overflow au contenu principal uniquement */
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.split-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.chat-section,
+.editor-section {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Ajout d'une media query pour la réactivité */
+@media (max-width: 1024px) {
+  .split-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}

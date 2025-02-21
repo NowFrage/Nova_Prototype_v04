@@ -1,0 +1,100 @@
+{
+    "tasks": [
+      {
+        "id": "T201",
+        "title": "Créer le layout principal (2 ou 3 zones)",
+        "description": "Mettre en place un composant ou layout parent (MainLayout) divisant l’écran en plusieurs sections (chat, éditeur Mermaid, etc.).",
+        "status": "pending",
+        "filesAffected": [
+          "frontend/src/layouts/MainLayout.*",
+          "frontend/src/styles/layout.css"
+        ],
+        "dependencies": [],
+        "instructions": "1) Créer un composant MainLayout (JS/TS ou Vue/React). 2) Prévoir la zone de chat d’un côté, la zone d’éditeur de l’autre. 3) Ajout minimal de styles (layout.css). 4) Respecter la limite ~400 lignes.",
+        "tests": "Lancer l’appli (npm run dev ou équivalent) et vérifier que l’écran est bien découpé. Aucun test automatisé, simple contrôle visuel.",
+        "priority": "high"
+      },
+      {
+        "id": "T202",
+        "title": "Implémenter le composant ChatInterface",
+        "description": "Créer un composant ChatInterface avec une zone d’historique et un champ de saisie. Lier un appel minimal à l’API chat du backend.",
+        "status": "pending",
+        "filesAffected": [
+          "frontend/src/components/chat/ChatInterface.*",
+          "frontend/src/services/apiChat.*"
+        ],
+        "dependencies": ["T201"],
+        "instructions": "1) Créer un dossier chat/ et un fichier ChatInterface. 2) Gérer une liste de messages (state local ou store). 3) Sur envoi (clic/bouton), appeler /api/chat (mocker ou utiliser la route existante). 4) Afficher la réponse dans l’historique. 5) ~400 lignes max.",
+        "tests": "Au minimum, tester manuellement : taper un message => la réponse s’affiche dans ChatInterface. Optionnel : un test unitaire ChatInterface.spec.js.",
+        "priority": "high"
+      },
+      {
+        "id": "T203",
+        "title": "Ajouter un composant ModelSelector",
+        "description": "Proposer un menu déroulant pour choisir le modèle d’IA (ChatGPT, Ollama, etc.) et stocker la sélection (context/store).",
+        "status": "pending",
+        "filesAffected": [
+          "frontend/src/components/ModelSelector.*",
+          "frontend/src/store/modelStore.*"
+        ],
+        "dependencies": ["T201"],
+        "instructions": "1) Créer ModelSelector (dropdown). 2) Options : ChatGPT, Ollama, DeepSeek, etc. 3) Sur changement, enregistrer dans un store ou un state commun. 4) Le composant ChatInterface pourra lire ce choix pour l’appel API.",
+        "tests": "Contrôle manuel : la valeur du dropdown change, la variable modelId se met à jour. En test unitaire, mocker le store et vérifier le dispatch.",
+        "priority": "medium"
+      },
+      {
+        "id": "T204",
+        "title": "Mettre en place un composant MermaidEditor",
+        "description": "Créer un éditeur de texte pour le code Mermaid et une preview utilisant la librairie Mermaid côté frontend.",
+        "status": "pending",
+        "filesAffected": [
+          "frontend/src/components/diagram/MermaidEditor.*",
+          "frontend/src/components/diagram/Preview.*"
+        ],
+        "dependencies": ["T201"],
+        "instructions": "1) Éditeur : un <textarea> ou un composant code. 2) Preview : import mermaid, parser le code pour un rendu. 3) Gérer la synchro : onChange => re-render la preview. 4) <400 lignes par fichier.",
+        "tests": "Manuel : taper du code mermaid, la preview se met à jour. Optionnel : test unitaire sur la fonction parseMermaid.",
+        "priority": "high"
+      },
+      {
+        "id": "T205",
+        "title": "Ajouter un panneau mémoire (MemoryPanel) optionnel",
+        "description": "Créer un composant pour afficher l’historique global, résumés automatiques, etc. (si nécessaire).",
+        "status": "pending",
+        "filesAffected": [
+          "frontend/src/components/memory/MemoryPanel.*",
+          "backend/src/services/memory.js"
+        ],
+        "dependencies": ["T202", "T204"],
+        "instructions": "1) MemoryPanel : liste de résumés, historiques. 2) Utiliser /api/memory (ou un module memory). 3) Ajouter un toggle (cacher/afficher). 4) ~400 lignes max.",
+        "tests": "Manuel : clique sur 'Memory', la liste de résumés apparaît. Optionnel : test unitaire MemoryPanel.spec.js.",
+        "priority": "low"
+      },
+      {
+        "id": "T206",
+        "title": "Intégrer un style minimal (mode sombre)",
+        "description": "Ajouter un thème sombre (CSS / scss) et un switch dans l’UI. Les composants ChatInterface, MermaidEditor doivent s’adapter.",
+        "status": "pending",
+        "filesAffected": [
+          "frontend/src/styles/theme.css",
+          "frontend/src/components/common/ThemeSwitch.*"
+        ],
+        "dependencies": ["T201", "T202", "T204"],
+        "instructions": "1) Créer un fichier theme.css (dark / light). 2) Ajouter un composant ThemeSwitch. 3) Appliquer la classe .dark ou .light au body ou container. 4) 400 lignes max par fichier.",
+        "tests": "Manuel : toggle => l’interface passe en mode sombre / clair. Optionnel : test unitaire minimal sur le ThemeSwitch.",
+        "priority": "medium"
+      },
+      {
+        "id": "T207",
+        "title": "Vérifier l’interface finale (tests, lint, compilation)",
+        "description": "Contrôler que toutes les fonctionnalités de l’UI (chat, selection IA, mermaid editor, memory, theme) fonctionnent.",
+        "status": "pending",
+        "filesAffected": [],
+        "dependencies": ["T201", "T202", "T203", "T204", "T205", "T206"],
+        "instructions": "1) Lancer l’appli (npm run dev). 2) Tester chaque composant : chat => OK, éditeur => OK, theme => OK. 3) Lancer /verify pour check lint/build. 4) Si tout est bon, finaliser T207 => 'completed'.",
+        "tests": "npm run test + test manuel d’utilisation.",
+        "priority": "high"
+      }
+    ]
+  }
+  
